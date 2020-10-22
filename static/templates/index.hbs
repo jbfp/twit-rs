@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <header>
+        <h1>Twit-rs</h1>
+        <h2>Welcome</h2>
+
+        <p>Henlo welcom to twit-rs{{#if username}}
+            , <strong>{{username}}</strong>
+            {{/if}}
+        </p>
+
+        {{#if username}}
+        <form action="/logout" method="post">
+            {{! TODO: CSRF token }}
+            <button type="submit">Sign out</button>
+        </form>
+        {{/if}}
+    </header>
+
+    <main>
+        {{#if username}}
+        <a href="/tweet">Write a tweet</a>
+        {{else}}
+        <form action="/login" method="POST">
+            {{! TODO: CSRF token }}
+            <input type="text" name="username" id="username" placeholder="User name">
+            <button type="submit">Sign in</button>
+        </form>
+        {{/if}}
+
+        <hr />
+
+        <h2>Tweets</h2>
+        <div id="tweets">Loading tweets...</div>
+    </main>
+
+    <script>
+        function loadTweetsAsync() {
+            fetch('/tweets')
+                .then(res => res.text())
+                .then(html => document.getElementById('tweets').innerHTML = html);
+        }
+
+        setTimeout(loadTweetsAsync, 500);
+
+        const eventSource = new EventSource('/stream');
+        eventSource.addEventListener('message', loadTweetsAsync);
+    </script>
+</body>
+
+</html>

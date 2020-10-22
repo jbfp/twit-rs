@@ -1,0 +1,9 @@
+{{#if tweets}}
+<ul id="tweet-list">
+    {{#each tweets}}
+    {{>tweet}}
+    {{/each}}
+</ul>
+{{else}}
+No tweets found
+{{/if}}

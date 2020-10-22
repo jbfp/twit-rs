@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tweet</title>
+</head>
+
+<body>
+    <h1>Twit-rs</h1>
+    <h2>New Tweet</h2>
+
+    <form action="/tweet" method="post">
+        {{! TODO: CSRF token }}
+        <div>
+            <textarea name="content" id="content" cols="60" rows="5" placeholder="What's on your mind?" maxlength="280"></textarea>
+        </div>
+
+        {{#if error}}
+        <div>{{error}}</div>
+        {{/if}}
+
+        <div>
+            <button type="submit">Tweet!</button>
+            <a href="/">Go back</a>
+        </div>
+    </form>
+</body>
+
+</html>
